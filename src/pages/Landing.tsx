@@ -87,7 +87,7 @@ const Landing: FC = () => {
                 <p className="text-gray-600">{r.description}</p>
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
                   <span>⏱ {r.prepTimeMinutes} min</span>
-                  <span>⭐ {r.rating}</span>
+                  <span>⭐123{r.rating}</span>
                 </div>
               </div>
             </div>
