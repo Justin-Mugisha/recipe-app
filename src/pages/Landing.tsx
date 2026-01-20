@@ -1,12 +1,15 @@
 import { useState } from "react";
 import type { FC } from "react";
 import { useGetRecipesQuery } from "@/features/recipesApi";
+import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 const Landing: FC = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [sortBy, setSortBy] = useState("name");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const navigate = useNavigate();
 
   const { data, isLoading } = useGetRecipesQuery({
     search,
@@ -15,13 +18,29 @@ const Landing: FC = () => {
     order,
   });
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   if (isLoading) return <h2 className="text-2xl font-bold p-4">Loading...</h2>;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-4xl font-bold mb-8">Recipes</h1>
+      <div className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto p-6 flex justify-between items-center">
+          <h1 className="text-4xl font-bold">Recipes</h1>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition"
+          >
+            <LogOut size={20} />
+            Logout
+          </button>
+        </div>
+      </div>
 
+      <div className="max-w-6xl mx-auto p-6">
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="space-y-4 md:space-y-0 md:flex md:gap-4">
             <input
